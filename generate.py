@@ -2,6 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+import argparse
+import re
+
 from random import choice, sample
 
 GENDER = 0          # 0=Both, 1=Female, 2=Male
@@ -66,16 +69,57 @@ def generate(data, count):
     return names
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate random names")
+    parser.add_argument('nspec',
+                        type=str,
+                        nargs='+',
+                        help="a string specifying the type of " +
+                        "name(s) to generate, (eg. 3F3 2m B")
+    args = parser.parse_args()
+
+    # print args.nspec
+    specs = []
+    rx = re.compile('(\d*)([FfMmBb])(\d*)')
+    for arg in args.nspec:
+        m = rx.match(arg)
+        c, g, x = m.groups()
+        if c is '':
+            nc = 1
+        else:
+            nc = int(c)
+
+        if x is '':
+            nx = 1
+        else:
+            nx = int(x)
+
+        gs = g.upper()
+        if gs == 'B':
+            gm = 0
+        elif gs == 'F':
+            gm = 1
+        elif gs == 'M':
+            gm = 2
+        else:
+            raise Exception("invalid gender type - %s" % m)
+
+        specs.append((nc, gm, nx))
+        return specs
+
+
 def main():
     data = load_data()
     # print data
     # print data
 
-    for name in generate(data, 10):
-        print name
+    # for name in generate(data, 10):
+    #     print name
 
     # print generate_first_name(choose_first_names(data, 0), 3)
     # print generate_last_name(data['last'])
+    specs = parse_args()
+    print specs
     return 0
 
 
