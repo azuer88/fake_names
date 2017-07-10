@@ -7,8 +7,9 @@ import re
 
 from random import choice, sample
 
-GENDER = 0          # 0=Both, 1=Female, 2=Male
-FIRSTNAMES = 2      # number of first names to use
+BOTH = 0
+FEMALE = 1
+MALE = 2
 
 
 def load_data():
@@ -45,26 +46,28 @@ def generate_first_name(first, first_count):
 
 
 def choose_first_names(data, gender):
-    if gender == 0:
+    if gender == BOTH:
         return choice((data['male'], data['female']))
-    elif gender == 1:  # Female
+    elif gender == FEMALE:
         return data['female']
-    elif gender == 2:  # Male
+    elif gender == MALE:
         return data['male']
     else:
         raise Exception('Invalid gender value')
 
 
-def generate(data, count):
+def generate(data, specs):
 
     names = []
 
-    for i in range(0, count):
-        first_name = generate_first_name(
-            choose_first_names(data, GENDER), FIRSTNAMES)
-        last_name = generate_last_name(data['last'])
+    for spec in specs:
+        count, gender, name_count = spec
+        for i in range(count):
+            first_name = generate_first_name(
+                choose_first_names(data, gender), name_count)
+            last_name = generate_last_name(data['last'])
 
-        names.append("%s %s" % (first_name, last_name))
+            names.append("%s %s" % (first_name, last_name))
 
     return names
 
@@ -105,7 +108,8 @@ def parse_args():
             raise Exception("invalid gender type - %s" % m)
 
         specs.append((nc, gm, nx))
-        return specs
+
+    return specs
 
 
 def main():
@@ -120,6 +124,10 @@ def main():
     # print generate_last_name(data['last'])
     specs = parse_args()
     print specs
+
+    for name in generate(data, specs):
+        print name
+
     return 0
 
 
