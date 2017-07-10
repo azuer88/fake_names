@@ -4,6 +4,7 @@
 # author: Blue Cuenca <blue.cuenca@gmail.com>
 
 import sys
+import os
 import pwd
 import argparse
 
@@ -51,8 +52,11 @@ def parse_args():
 def main():
 
     args = parse_args()
-
-    prefix = args.prefix
+    prefix = ''
+    if 'PREFIX' in os.environ:
+        prefix = os.environ['PREFIX']
+    if args.prefix:
+        prefix = args.prefix
 
     usernames = []
     for line in sys.stdin:
@@ -62,9 +66,9 @@ def main():
                 break
         usernames.append(uname)
         if prefix:
-            print "{}.{}\t{}\n".format(prefix, uname, line)
+            print "{}.{}\t{}".format(prefix, uname, line.strip())
         else:
-            print "{}\t{}\n".format(uname, line)
+            print "{}\t{}".format(uname, line.strip())
 
 if __name__ == "__main__":
     sys.exit(main())

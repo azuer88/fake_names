@@ -123,7 +123,7 @@ def main():
     # print generate_first_name(choose_first_names(data, 0), 3)
     # print generate_last_name(data['last'])
     specs = parse_args()
-    print specs
+    # print specs
 
     for name in generate(data, specs):
         print name
