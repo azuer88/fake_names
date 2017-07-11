@@ -49,26 +49,55 @@ def parse_args():
     return args
 
 
-def main():
+def normalize_name(source_string):
+    names = source_string.split()
 
-    args = parse_args()
-    prefix = ''
+    first = names.pop(0)
+    if first[-1] == ",":
+        # this is a last name
+        last = first[:-1]
+        names.append(last)
+    else:
+        names.insert(0, first)
+
+    return names
+
+
+def generate_username(lines, prefix=''):
+
+    prepend = ''
     if 'PREFIX' in os.environ:
-        prefix = os.environ['PREFIX']
-    if args.prefix:
-        prefix = args.prefix
+        prepend = os.environ['PREFIX']
+
+    if prefix:
+        prepend = prefix
 
     usernames = []
-    for line in sys.stdin:
-        names = line.split()
+    for line in lines:
+        names = normalize_name(line)
+
         for uname in make_username(names):
             if not user_exists(uname, usernames):
                 break
-        usernames.append(uname)
-        if prefix:
-            print "{}.{}\t{}".format(prefix, uname, line.strip())
         else:
-            print "{}\t{}".format(uname, line.strip())
+            raise Exception("no suitable username found for %s" %
+                            " ".join(names))
+
+        usernames.append(uname)
+
+        if prepend:
+            yield "{}.{}\t{}".format(prepend.lower(), uname, line.strip())
+        else:
+            yield "{}\t{}".format(uname, line.strip())
+
+
+def main():
+
+    args = parse_args()
+    prefix = args.prefix
+
+    for username in generate_username(sys.stdin, prefix=prefix):
+        print username
 
 if __name__ == "__main__":
     sys.exit(main())
