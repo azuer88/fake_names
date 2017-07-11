@@ -35,6 +35,15 @@ def parse_args():
                         nargs="?",
                         help="Text file containing a user's full name per line")
 
+    parser.add_argument("-o", dest="dest",
+                        required=True,
+                        help="output file where to put the list of usernames " +
+                        "with the associated full name of the user.")
+
+    parser.add_argument("-f", dest="force",
+                        action="store_true",
+                        help="Force overwriting outpuf file if it exists.")
+
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-p", "--prefix", default="",
                        help="Prefix to prepend to generated username")
@@ -59,6 +68,8 @@ def parse_args():
         config['source'] = sys.stdin
         config['prefix'] = args.prefix
 
+    config['destination'] = args.dest
+    config['force'] = args.force
     # print args
 
     return config
@@ -68,8 +79,15 @@ def main():
     args = parse_args()
     # print args
 
-    for name in get_names(args):
-        print userline(name)
+    if os.path.isfile(args["destination"]) and not args["force"]:
+        raise Exception(
+            "'{}' exist.  will not overwrite, exiting.".format(
+                args["destination"]))
+
+    with open(args["destination"], "w+") as output:
+        for name in get_names(args):
+            output.write("{}\n".format(name))
+            print userline(name)
 
 
 if __name__ == "__main__":
