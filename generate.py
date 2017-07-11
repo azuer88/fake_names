@@ -56,11 +56,12 @@ def choose_first_names(data, gender):
         raise Exception('Invalid gender value')
 
 
-def generate(data, specs):
+def generate(*args):
 
+    data = load_data()
     names = []
 
-    for spec in specs:
+    for spec in args:
         count, gender, name_count = spec
         for i in range(count):
             first_name = generate_first_name(
@@ -113,7 +114,7 @@ def parse_args():
 
 
 def main():
-    data = load_data()
+    # data = load_data()
     # print data
     # print data
 
@@ -125,7 +126,7 @@ def main():
     specs = parse_args()
     # print specs
 
-    for name in generate(data, specs):
+    for name in generate(*specs):
         print name
 
     return 0
