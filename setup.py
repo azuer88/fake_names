@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 setup(
     name="pyhelpers",
     version="0.9a1",
-    packages=find_packages('src'),
+    packages=find_packages(''),
     install_requires=['six', ],
     package_data={
         'data': ['/src/scripts/data/*', ],
@@ -20,4 +20,6 @@ setup(
     license="MIT",
     keywords="user batch creation",
     url="https://www.github.com/azuer88/pyhelpers",
+
+    description="Helper python scripts for linux administration",
 )
