@@ -20,6 +20,7 @@ setup(
     license="MIT",
     keywords="user batch creation",
     url="https://www.github.com/azuer88/pyhelpers",
-
+    dependency_links=['https://github.com/azuer88/pyhelpers/tarball/master' +
+                      '#egg=package-09a1', ],
     description="Helper python scripts for linux administration",
 )
