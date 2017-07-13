@@ -1,0 +1,2 @@
+include pyhelpers/data/*
+include README.rst

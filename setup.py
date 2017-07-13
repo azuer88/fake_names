@@ -11,9 +11,9 @@ setup(
     packages=find_packages(),
     install_requires=['six', ],
     package_data={
-        'data': ['/pyhelpers/data/*', ],
+        '': ['/pyhelpers/data/*', ],
     },
-
+    include_package_data=True,
     # metadata
     author="Blue Cuenca",
     author_email="blue.cuenca@gmail.com",
@@ -23,4 +23,10 @@ setup(
     dependency_links=['https://github.com/azuer88/pyhelpers/tarball/master' +
                       '#egg=package-09a1', ],
     description="Helper python scripts for linux administration",
+    classifiers=[
+        'Development Status :: 3 - Beta',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Utility',
+    ],
 )
