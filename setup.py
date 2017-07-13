@@ -8,10 +8,10 @@ from setuptools import setup, find_packages
 setup(
     name="pyhelpers",
     version="0.9a1",
-    packages=find_packages(''),
+    packages=find_packages(),
     install_requires=['six', ],
     package_data={
-        'data': ['/src/scripts/data/*', ],
+        'data': ['/pyhelpers/data/*', ],
     },
 
     # metadata
