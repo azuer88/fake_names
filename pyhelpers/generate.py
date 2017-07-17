@@ -13,7 +13,8 @@ MALE = 2
 
 
 def load_data():
-    FOLDER = "./data/"
+    BASE = os.path.dirname(os.path.realpath(__file__))
+    FOLDER = os.path.join(BASE, "./data/")
     FILES = ['male', 'female', 'last']
     data = {}
     # counts = {}

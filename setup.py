@@ -29,4 +29,11 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Utility',
     ],
+
+    entry_points={
+        'console_scripts': [
+                            'newusers-from=pyhelpers.mknewusersfrom:main',
+                            'genusernames=pyhelpers.generate:main',
+        ],
+    },
 )
