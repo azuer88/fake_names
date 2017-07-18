@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="pyhelpers",
-    version="0.9a1",
+    version="0.9a2",
     packages=find_packages(),
     install_requires=['six', ],
     package_data={
@@ -29,7 +29,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Utility',
     ],
-
+    python_requires='>=2.7',
     entry_points={
         'console_scripts': [
                             'newusers-from=pyhelpers.mknewusersfrom:main',
