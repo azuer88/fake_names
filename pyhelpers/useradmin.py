@@ -61,16 +61,24 @@ def check_permissions():
         raise Exception("administrative privileges required.")
 
 
+def lsuser(pattern="*"):
+    sa = AdminSingleton()
+    admin = sa.get_admin()
+
+    return admin.enumerateUsers(pattern)
+
+
 def main():
 
     # check_permissions()
 
     print encrypt_password("password")
 
+    print lsuser()
     # u = mkuser("deleteme", "Delete Me User", "password")
     # print "u = ", u
 
-    rmuser("deleteme")
+    # rmuser("deleteme")
     # for k in u.keys():
     #     print "{}: '{}'\n".format(k, u.get(k))
 
